@@ -226,9 +226,7 @@ class ReActAgentStrategy(AgentStrategy):
                     scratchpad.agent_response += chunk
                     scratchpad.thought += chunk
             scratchpad.thought = (
-                scratchpad.thought.strip()
-                if scratchpad.thought
-                else "I am thinking about how to help you"
+                scratchpad.thought.strip() if scratchpad.thought else ""
             )
             agent_scratchpad.append(scratchpad)
 
@@ -265,7 +263,21 @@ class ReActAgentStrategy(AgentStrategy):
                 },
             )
             if not scratchpad.action:
-                final_answer = scratchpad.thought
+                # No action detected - this is incomplete
+                if iteration_step < max_iteration_steps:
+                    # Retry with guidance
+                    run_agent_state = True
+                    if scratchpad.thought:
+                        scratchpad.observation = "You must provide an Action after your Thought. Use the 'Final Answer' action to provide your response."
+                    else:
+                        scratchpad.observation = "Please provide both a Thought and an Action in the required format."
+                else:
+                    # Last iteration - use thought as fallback if available
+                    final_answer = (
+                        scratchpad.thought
+                        if scratchpad.thought
+                        else "I apologize, but I was unable to complete the task."
+                    )
             else:
                 if scratchpad.action.action_name.lower() == "final answer":
                     # action is final answer, return final answer directly

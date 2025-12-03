@@ -37,7 +37,7 @@ Action:
 }
 ```
 
-Begin! Reminder to ALWAYS respond with a valid json blob of a single action. Use tools if necessary. Respond directly if appropriate. Format is Action:```$JSON_BLOB```then Observation:.
+Begin! Reminder: EVERY response MUST include both a Thought and an Action in the format shown above. ALWAYS respond with a valid json blob of a single action. When you have the final answer, use the "Final Answer" action. Format is Action:```$JSON_BLOB```then Observation:.
 {{historic_messages}}
 Question: {{query}}
 {{agent_scratchpad}}
@@ -86,7 +86,7 @@ Action:
 }
 ```
 
-Begin! Reminder to ALWAYS respond with a valid json blob of a single action. Use tools if necessary. Respond directly if appropriate. Format is Action:```$JSON_BLOB```then Observation:.
+Begin! Reminder: EVERY response MUST include both a Thought and an Action in the format shown above. ALWAYS respond with a valid json blob of a single action. When you have the final answer, use the "Final Answer" action. Format is Action:```$JSON_BLOB```then Observation:.
 """  # noqa: E501
 
 
